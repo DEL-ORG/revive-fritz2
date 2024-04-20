@@ -2,24 +2,46 @@ pipeline {
     agent any
 
     stages {
-        stage('create a dir') {
+        stage('Test microservice catalog') {
+          agent {
+            docker {
+              image 'golang:1.20.1'
+              args '-u 0:0'
+            }
+           }
             steps {
                 sh '''
-                mkdir essai-jks
-                rm -rf essai
+            cd $WORKSPACE/REVIVE/src/catalog/
+            go test
                 '''
             }
-        }
+            
+        } 
 
-        stage('create a file') {
-            steps {
-                sh '''
-                touch test.txt 
-                rm-rf text.txt
-                '''
-            }
-        }
+        stage('Test maven-cart') {
+	      agent {
+           docker {
+             image 'maven:3.8.7-openjdk-18'
+           }
+         }
+           steps {
+               sh '''
+           cd $WORKSPACE/REVIVE/src/cart/
+           mvn  test  -Dmaven.test.skip=true --quiet
+               '''
+           }
+        }          
+    
+    
+    
+    
+    
     }
+
+
+
+
+}
 
     post {
         success {
