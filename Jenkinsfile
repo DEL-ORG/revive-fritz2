@@ -15,7 +15,22 @@ pipeline {
             go test
                 '''
             }
-        }           
+            
+        } 
+
+        stage('Test maven-cart') {
+	      agent {
+           docker {
+             image 'maven:3.8.7-openjdk-18'
+           }
+         }
+           steps {
+               sh '''
+           cd $WORKSPACE/REVIVE/src/cart/
+           mvn  test  -Dmaven.test.skip=true --quiet
+               '''
+           }
+        }          
     
     
     
