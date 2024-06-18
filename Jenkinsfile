@@ -6,7 +6,7 @@ pipeline {
             steps {
                 sh '''
                 mkdir essai-jks
-                rm -rf essai
+                rm -rf essai-jks
                 '''
             }
         }
@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''
                 touch test.txt 
-                rm-rf text.txt
+                rm-rf test.txt
                 '''
             }
         }
